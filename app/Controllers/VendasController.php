@@ -16,10 +16,8 @@ class VendasController
     public function venda()
     {
         // Render the index template
-        echo $this->twig->render('Views/vendas.html', [
-            'title' => 'Vendas',
-            'description' => 'Vendas cadastradas',
-            'keywords' => 'vendas, cadastro, lista'
+        echo $this->twig->render('vendas.html', [
+            'title' => 'Vendas'
         ]);
     }
 }

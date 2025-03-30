@@ -15,10 +15,8 @@ class DocuemtnoController
   
   public function documentoEntrada()
   {
-    echo $this->twig->render('Views/DocumentoEntrada.html', [
-      'title' => 'Documento de Entrada',
-      'description' => 'Cadastro de Documento de Entrada',
-      'keywords' => 'documento, entrada, cadastro'
+    echo $this->twig->render('documentoEntrada.html', [
+      'title' => 'Documento de Entrada'
     ]);
   }
 }

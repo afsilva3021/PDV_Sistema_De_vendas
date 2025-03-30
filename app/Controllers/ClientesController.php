@@ -16,10 +16,8 @@ class ClientesController
   public function cliente()
   {
     // Render the index template
-    echo $this->twig->render('Views/clientes.html', [
-      'title' => 'Clientes',
-      'description' => 'Clientes cadastrados',
-      'keywords' => 'clientes, cadastro, lista'
+    echo $this->twig->render('clientes.html', [
+      'title' => 'Clientes'
     ]);
   }
 }

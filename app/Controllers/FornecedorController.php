@@ -15,10 +15,8 @@ class FornecedorControllers
 
     public function fornecedor()
     {
-        echo $this->twig->render('Views/fornecedor.html', [
-            'title' => 'Fornecedores',
-            'description' => 'Fornecedores cadastrados',
-            'keywords' => 'fornecedores, cadastro, lista'
+        echo $this->twig->render('fornecedor.html', [
+            'title' => 'Fornecedores'
         ]);
     }
 }

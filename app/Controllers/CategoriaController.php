@@ -15,10 +15,8 @@ class CategoriaController
   public function index()
   {
     // Render the index template
-    echo $this->twig->render('Views/categoria.html', [
-      'title' => 'Categorias',
-      'description' => 'Categorias de produtos e serviços',
-      'keywords' => 'categorias, produtos, serviços'
+    echo $this->twig->render('categoria.html', [
+      'title' => 'Categorias'
     ]);
   }
 }

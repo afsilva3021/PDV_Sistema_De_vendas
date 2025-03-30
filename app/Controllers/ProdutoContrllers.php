@@ -12,13 +12,11 @@ class ProdutoContrllers
     {
         $this->twig = $twig;
     }
-    public function produto()
+    public function produtos()
     {
         // Render the index template
-        echo $this->twig->render('Views/produto.html', [
-            'title' => 'Produtos',
-            'description' => 'Produtos cadastrados',
-            'keywords' => 'produtos, cadastro, lista'
+        echo $this->twig->render('produtos.html', [
+            'title' => 'Produtos'
         ]);
     }
 }

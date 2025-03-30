@@ -4,6 +4,8 @@ namespace Core;
 
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
+use App\Controllers\UsuariosController;
+use App\Controllers\ProdutoContrllers;
 use App\Models\UserModel;
 
 class Router
@@ -34,11 +36,15 @@ class Router
 
         $authController = new AuthController($this->userModel, $this->twig);
         $homeController = new HomeController($this->twig);
+        $produtoController = new ProdutoContrllers($this->twig);
+        $usuariosController = new UsuariosController($this->twig);
 
         $routes = [
             'GET' => [
                 '/' => [$authController, 'login'], // Exibe o formulário de login
                 '/home' => [$homeController, 'home'], // Página inicial após login
+                '/produtos' => [$produtoController, 'produtos'], // Página de produtos
+                '/usuarios' => [$usuariosController, 'usuarios'], // Página de usuários
             ],
             'POST' => [
                 '/' => [$authController, 'login'], // Processa o login

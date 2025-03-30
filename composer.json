@@ -1,0 +1,20 @@
+{
+    "name": "2091/pdvsistem",
+    "version": "1.0.0",
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core/",
+            "App\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "afsilva3021",
+            "email": "afsilva3021@gmail.com"
+        }
+    ],
+    "require": {
+        "twig/twig": "^3.20",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

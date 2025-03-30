@@ -48,7 +48,9 @@ class AuthController
         echo $this->twig->render('login.html', ['error' => 'Erro interno: ' . $e->getMessage()]);
       }
     } else {
-      echo $this->twig->render('login.html');
+      echo $this->twig->render('login.html', [
+        'title' => 'Login',
+      ]);
     }
   }
 }

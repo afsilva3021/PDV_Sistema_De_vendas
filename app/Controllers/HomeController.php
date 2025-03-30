@@ -13,13 +13,11 @@ class HomeController
         $this->twig = $twig;
     }
 
-    public function index()
+    public function home()
     {
-        // Render the index template
-        echo $this->twig->render('Views/index.html', [
-            'title' => 'Home',
-            'description' => 'Página inicial do sistema',
-            'keywords' => 'home, sistema, inicial'
+        // Renderizar a página inicial
+        echo $this->twig->render('home.html', [
+            'title' => 'Página Inicial',
         ]);
     }
 }

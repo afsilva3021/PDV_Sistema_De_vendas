@@ -8,7 +8,6 @@ use PDOException;
 
 class UserModel
 {
-    
   public function authenticate($email, $password)
   {
     try {
@@ -17,7 +16,7 @@ class UserModel
       $pdo = $dbConect->connect();
 
       // Prevenir injeção SQL com prepared statements
-      $stmt = $pdo->prepare("SELECT ID, PASSWORD FROM USUARIOS WHERE EMAIL = ?");
+      $stmt = $pdo->prepare("SELECT ID, SENHA FROM USUARIOS WHERE EMAIL = ?");
       $stmt->bindParam(1, $email, PDO::PARAM_STR);
       $stmt->execute();
 
@@ -26,8 +25,8 @@ class UserModel
 
       // Verificar se o usuário existe
       if ($result) {
-        // Verificar se a senha corresponde ao hash armazenado no banco
-        if (password_verify($password, $result['PASSWORD'])) {
+        // Verificar se a senha fornecida corresponde ao hash armazenado no banco password_verify
+        if ($password === $result['SENHA']) {
           // Retornar os dados do usuário autenticado
           return [
             'id' => $result['ID'],

@@ -13,7 +13,8 @@ class Database
   public static function connect()
   {
     if (!self::$pdo) {
-      $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+      // Corrigir o caminho para o arquivo .env
+      $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
       $dotenv->load();
 
       $host = $_ENV['DB_HOST'];

@@ -35,7 +35,6 @@ class Router
         $authController = new AuthController($this->userModel, $this->twig);
         $homeController = new HomeController($this->twig);
 
-        // Definir rotas
         $routes = [
             'GET' => [
                 '/' => [$authController, 'login'], // Exibe o formulário de login
@@ -43,6 +42,7 @@ class Router
             ],
             'POST' => [
                 '/' => [$authController, 'login'], // Processa o login
+                '/login' => [$authController, 'login'], // Processa o login
             ],
         ];
 

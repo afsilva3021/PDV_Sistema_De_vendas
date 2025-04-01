@@ -5,7 +5,8 @@ namespace Core;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use App\Controllers\UsuariosController;
-use App\Controllers\ProdutoContrllers;
+use App\Controllers\ProdutoContrller;
+use App\Controllers\ClientesController;
 use App\Models\UserModel;
 
 class Router
@@ -36,27 +37,30 @@ class Router
 
         $authController = new AuthController($this->userModel, $this->twig);
         $homeController = new HomeController($this->twig);
-        $produtoController = new ProdutoContrllers($this->twig);
+        $produtoController = new ProdutoContrller($this->twig);
+        $clientesController = new ClientesController($this->twig);
         $usuariosController = new UsuariosController($this->twig);
+
 
         $routes = [
             'GET' => [
                 '/' => [$authController, 'login'], // Exibe o formulário de login
                 '/home' => [$homeController, 'home'], // Página inicial após login
+                '/clientes' => [$clientesController, 'clientes'], // Página de clientes
                 '/produtos' => [$produtoController, 'produtos'], // Página de produtos
                 '/usuarios' => [$usuariosController, 'usuarios'], // Página de usuários
             ],
             'POST' => [
                 '/' => [$authController, 'login'], // Processa o login
-                '/login' => [$authController, 'login'], // Processa o login
+                '/cadastrar' => [$usuariosController, 'cadastrar'], // Processa o cadastro
             ],
         ];
-
         try {
             if (isset($routes[$method][$uri])) {
                 // Middleware de autenticação para rotas protegidas
-                if ($uri === '/home' && !isset($_SESSION['user_id'])) {
-                    header('Location: /login');
+                $protectedRoutes = ['/home', '/clientes', '/produtos', '/usuarios', '/cadastrar']; // Rotas protegidas
+                if (in_array($uri, $protectedRoutes) && !isset($_SESSION['user_id'])) {
+                    header('Location: /');
                     exit;
                 }
 

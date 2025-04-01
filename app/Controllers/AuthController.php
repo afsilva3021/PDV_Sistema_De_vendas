@@ -37,7 +37,8 @@ class AuthController
 
         if ($user) {
           // Autenticação bem-sucedida
-          $_SESSION['user_id'] = $user['id'];
+          $_SESSION['user_id'] = $user['ID'];
+          $_SESSION['NOME'] = $user['NOME']; // Armazena o nome do usuário na sessão
           header('Location: /home');
           exit;
         } else {

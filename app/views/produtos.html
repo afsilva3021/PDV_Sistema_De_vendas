@@ -221,37 +221,43 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Codigo</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Categoria</th>
+                            <th>status</th>
+                            <th>Editar</th>
                         </tr>
                     </thead>
                     <tfoot>
                         <tr>
                             <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
+                            <th>Codigo</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Categoria</th>
+                            <th>status</th>
+                            <th>Editar</th>
                         </tr>
                     </tfoot>
                     <tbody>
-                        {% for usuario in usuarios %}
+                        {% for produto in produtos %}
                         <tr>
-                            <td>{{ usuario.NOME }}</td>
-                            <td>{{ usuario.EMAIL }}</td>
-                            <td>{{ usuario.SENHA }}</td>
-                            <td>{{ usuario.DEPARTAMENTO }}</td>
-                            <td>{{ usuario.GRUPO }}</td>
-                            <td>{{ usuario.TELEFONE }}</td>
-                            <td><button class="btn btn-outline-primary"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <td>{{ produto.NOME }}</td>
+                            <td>{{ produto.CODIGO }}</td>
+                            <td>{{ produto.DESCRICAO }}</td>
+                            <td>{{ produto.PRECO }}</td>
+                            <td>{{ produto.QUANTIDADE }}</td>
+                            <td>{{ produto.CATEGORIA }}</td>
+                            <td>{{ produto.STATUS }}</td>
+                            <td><button class="btn btn-outline-primary"><i
+                                        class="fa-solid fa-pen-to-square"></i></button>
                         </tr>
                         {% else %}
                         <tr>
-                            <td>Nenhum Usurario encontrado.</td>
+                            <td>Produtos não Cadastrado.</td>
                         </tr>
                         {% endfor %}
                     </tbody>

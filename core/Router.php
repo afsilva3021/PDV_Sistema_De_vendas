@@ -49,6 +49,8 @@ class Router
                 '/clientes' => [$clientesController, 'clientes'], // Página de clientes
                 '/produtos' => [$produtoController, 'produtos'], // Página de produtos
                 '/usuarios' => [$usuariosController, 'usuarios'], // Página de usuários
+                '/logout' => [$authController, 'logout'], // Rota para logoff
+
             ],
             'POST' => [
                 '/' => [$authController, 'login'], // Processa o login

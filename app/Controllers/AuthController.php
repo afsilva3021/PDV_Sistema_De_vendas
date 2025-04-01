@@ -37,9 +37,9 @@ class AuthController
 
         if ($user) {
           // Autenticação bem-sucedida
-          $_SESSION['user_id'] = $user['ID'];
-          $_SESSION['NOME'] = $user['NOME']; // Armazena o nome do usuário na sessão
-          header('Location: /home');
+          $_SESSION['user_id'] = $user['id'];
+          $_SESSION['user_name'] = $user['name']; // Armazena o nome do usuário na sessão
+          header('Location: /home'); // Redireciona para a página home
           exit;
         } else {
           // Credenciais inválidas
@@ -53,5 +53,20 @@ class AuthController
         'title' => 'Login',
       ]);
     }
+  }
+
+  public function logout()
+  {
+    if (session_status() === PHP_SESSION_NONE) {
+      session_start();
+    }
+
+    // Destruir a sessão
+    session_unset(); // Remove todas as variáveis de sessão
+    session_destroy(); // Destroi a sessão
+
+    // Redirecionar para a página de login
+    header('Location: /');
+    exit;
   }
 }

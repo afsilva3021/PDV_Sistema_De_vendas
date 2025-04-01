@@ -15,9 +15,18 @@ class HomeController
 
     public function home()
     {
-        // Renderizar a página inicial
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /');
+            exit;
+        }
+
         echo $this->twig->render('home.html', [
             'title' => 'Página Inicial',
+            'user_name' => $_SESSION['user_name'], // Passa o nome do usuário para o template
         ]);
     }
 }

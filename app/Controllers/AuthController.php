@@ -28,7 +28,9 @@ class AuthController
 
       // Validação do email
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo $this->twig->render('login.html', ['error' => 'Email inválido']);
+        echo $this->twig->render('login.html', [
+          'error' => 'Email inválido',
+        ]);
         return;
       }
 
@@ -43,10 +45,15 @@ class AuthController
           exit;
         } else {
           // Credenciais inválidas
-          echo $this->twig->render('login.html', ['error' => 'Credenciais inválidas']);
+          echo $this->twig->render('login.html', [
+            'title' => 'Login',
+            'error' => 'Credenciais inválidas',
+          ]);
         }
       } catch (\Exception $e) {
-        echo $this->twig->render('login.html', ['error' => 'Erro interno: ' . $e->getMessage()]);
+        echo $this->twig->render('login.html', [
+          'error' => 'Erro interno: ' . $e->getMessage()
+        ]);
       }
     } else {
       echo $this->twig->render('login.html', [

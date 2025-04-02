@@ -35,7 +35,7 @@ class UsuariosModel
       throw new \Exception("Erro ao buscar usuário: " . $e->getMessage());
     }
   }
-  
+
 
   public function createUsuario($nome, $email, $senha, $departamento, $bloqueado, $grupo, $desconto, $telefone)
   {
@@ -70,33 +70,35 @@ class UsuariosModel
       $dbConect = new Database();
       $pdo = $dbConect->connect();
 
+      // Montar a consulta SQL dinamicamente
       $query = "UPDATE USUARIOS 
-                    SET NOME = :nome, EMAIL = :email,SENHA = :senha, DEPARTAMENTO = :departamento, 
+                    SET NOME = :nome, EMAIL = :email, DEPARTAMENTO = :departamento, 
                         BLOQUEADO = :bloqueado, GRUPO = :grupo, DESCONTO = :desconto, TELEFONE = :telefone";
 
+      // Adicionar o campo SENHA apenas se ele for fornecido
       if (!empty($senha)) {
         $query .= ", SENHA = :senha";
       }
 
       $query .= " WHERE ID = :id";
 
-      $hashedPassword = password_hash($senha, PASSWORD_DEFAULT);
-
       $stmt = $pdo->prepare($query);
 
+      // Vincular os parâmetros obrigatórios
       $stmt->bindParam(':id', $id, PDO::PARAM_INT);
       $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
       $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-      $stmt->bindParam(':senha', $hashedPassword, PDO::PARAM_STR);
       $stmt->bindParam(':departamento', $departamento, PDO::PARAM_STR);
       $stmt->bindParam(':bloqueado', $bloqueado, PDO::PARAM_INT);
       $stmt->bindParam(':grupo', $grupo, PDO::PARAM_STR);
       $stmt->bindParam(':desconto', $desconto, PDO::PARAM_STR);
       $stmt->bindParam(':telefone', $telefone, PDO::PARAM_STR);
 
+      // Vincular a senha apenas se ela for fornecida
       if (!empty($senha)) {
         $hashedPassword = password_hash($senha, PASSWORD_DEFAULT);
-        $stmt->bindParam(':senha', $hashedPassword, PDO::PARAM_STR);
+        error_log("Hash gerado para a senha: " . $hashedPassword);
+        $stmt->bindParam(':senha', $senha, PDO::PARAM_STR);
       }
 
       $stmt->execute();

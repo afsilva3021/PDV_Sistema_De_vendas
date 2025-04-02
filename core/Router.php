@@ -5,7 +5,7 @@ namespace Core;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use App\Controllers\UsuariosController;
-use App\Controllers\ProdutoContrller;
+use App\Controllers\ProdutoController; // Corrigido o nome da classe
 use App\Controllers\ClientesController;
 use App\Models\UserModel;
 
@@ -16,13 +16,12 @@ class Router
 
     public function __construct()
     {
-        $this->userModel = new UserModel(); // Inicialize o modelo de usuário
+        $this->userModel = new UserModel();
 
         $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../app/Views/');
         $this->twig = new \Twig\Environment($loader, [
-            'cache' => __DIR__ . '/../cache',
             'cache' => false,
-            'debug' => true
+            'debug' => true,
         ]);
 
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
@@ -37,10 +36,9 @@ class Router
 
         $authController = new AuthController($this->userModel, $this->twig);
         $homeController = new HomeController($this->twig);
-        $produtoController = new ProdutoContrller($this->twig);
+        $produtoController = new ProdutoController($this->twig); // Corrigido
         $clientesController = new ClientesController($this->twig);
         $usuariosController = new UsuariosController($this->twig);
-
 
         $routes = [
             'GET' => [
@@ -50,17 +48,27 @@ class Router
                 '/produtos' => [$produtoController, 'produtos'], // Página de produtos
                 '/usuarios' => [$usuariosController, 'usuarios'], // Página de usuários
                 '/logout' => [$authController, 'logout'], // Rota para logoff
-
             ],
             'POST' => [
                 '/' => [$authController, 'login'], // Processa o login
                 '/cadastrar' => [$usuariosController, 'cadastrar'], // Processa o cadastro
+                '/editar' => [$usuariosController, 'editar'], // Processa a edição de usuários
+
             ],
         ];
+
         try {
-            if (isset($routes[$method][$uri])) {
+            // Tratamento de rotas dinâmicas
+            if (preg_match('#^/editar/(\d+)$#', $uri, $matches)) {
+                $id = $matches[1]; // Extrai o ID da URI
+                if ($method === 'GET') {
+                    call_user_func([$usuariosController, 'editar'], $id); // Exibe o formulário de edição
+                } elseif ($method === 'POST') {
+                    call_user_func([$usuariosController, 'editar'], $id); // Processa a atualização
+                }
+            } elseif (isset($routes[$method][$uri])) {
                 // Middleware de autenticação para rotas protegidas
-                $protectedRoutes = ['/home', '/clientes', '/produtos', '/usuarios', '/cadastrar']; // Rotas protegidas
+                $protectedRoutes = ['/home', '/clientes', '/produtos', '/usuarios', '/cadastrar','/editar'];
                 if (in_array($uri, $protectedRoutes) && !isset($_SESSION['user_id'])) {
                     header('Location: /');
                     exit;

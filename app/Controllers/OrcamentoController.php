@@ -17,7 +17,8 @@ class OrcamentoController
   {
     // Render the index view
     echo $this->twig->render('orccamento.html', [
-      'title' => 'Orçamento'
+      'user_name' => $_SESSION['user_name'],
+      'title' => 'Orçamento',
     ]);
   }
 }

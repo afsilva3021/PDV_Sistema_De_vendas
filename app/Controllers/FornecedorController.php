@@ -16,6 +16,7 @@ class FornecedorControllers
     public function fornecedor()
     {
         echo $this->twig->render('fornecedor.html', [
+            'user_name' => $_SESSION['user_name'],
             'title' => 'Fornecedores'
         ]);
     }

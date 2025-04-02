@@ -16,6 +16,7 @@ class CategoriaController
   {
     // Render the index template
     echo $this->twig->render('categoria.html', [
+      'user_name' => $_SESSION['user_name'],
       'title' => 'Categorias'
     ]);
   }

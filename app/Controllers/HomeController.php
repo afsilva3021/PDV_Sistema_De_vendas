@@ -25,8 +25,8 @@ class HomeController
         }
 
         echo $this->twig->render('home.html', [
+            'user_name' => $_SESSION['user_name'],
             'title' => 'Página Inicial',
-            'user_name' => $_SESSION['user_name'], // Passa o nome do usuário para o template
         ]);
     }
 }

@@ -17,7 +17,8 @@ class VendasController
     {
         // Render the index template
         echo $this->twig->render('vendas.html', [
-            'title' => 'Vendas'
+            'user_name' => $_SESSION['user_name'],
+            'title' => 'Vendas',
         ]);
     }
 }

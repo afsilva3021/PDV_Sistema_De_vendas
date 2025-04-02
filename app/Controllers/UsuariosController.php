@@ -14,21 +14,23 @@ class UsuariosController
     {
         $this->usuariosModel = new UsuariosModel();
         $this->twig = $twig;
+
+        // Iniciar a sessão, se ainda não estiver ativa
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
     }
 
     public function usuarios()
     {
-        try {
-            $usuarios = $this->usuariosModel->getAllUsuarios();
-            echo $this->twig->render('usuarios.html', [
-                'title' => 'Lista de Usuários',
-                'usuarios' => $usuarios,
-            ]);
-        } catch (\Exception $e) {
-            echo $this->twig->render('500.html', [
-                'message' => $e->getMessage(),
-            ]);
-        }
+        $usuarios = $this->usuariosModel->getAllUsuarios();
+        echo $this->twig->render('usuarios.html', [
+            'title' => 'Cadastro de Usuários',
+            'user_name' => $_SESSION['user_name'],
+            'usuarios' => $usuarios,
+            'error' => $error ?? null,
+            'success' => $success ?? null,
+        ]);
     }
 
     public function cadastrar()
@@ -41,45 +43,71 @@ class UsuariosController
             $bloqueio = filter_input(INPUT_POST, 'bloqueado', FILTER_VALIDATE_INT);
             $grupo = trim($_POST['grupo']);
             $desconto = filter_input(INPUT_POST, 'desconto', FILTER_VALIDATE_FLOAT);
-            $telefone = filter_input(INPUT_POST, 'telefone', FILTER_VALIDATE_INT);
+            $telefone = filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_NUMBER_INT);
 
+            // Validação básica
             if (empty($nome) || empty($email) || empty($senha)) {
-                // Renderizar a página com mensagem de erro
-                $usuarios = $this->usuariosModel->getAllUsuarios();
-                echo $this->twig->render('usuarios.html', [
-                    'title' => 'Lista de Usuários',
-                    'usuarios' => $usuarios,
-                    'error' => 'Os campos Nome, Email e Senha são obrigatórios.',
-                ]);
-                return;
+                $error = 'Os campos Nome, Email e Senha são obrigatórios.';
+            } else {
+                try {
+                    // Criptografar a senha
+                    $hashedPassword = password_hash($senha, PASSWORD_DEFAULT);
+
+                    // Cadastrar o usuário
+                    $this->usuariosModel->createUsuario($nome, $email, $hashedPassword, $departamento, $bloqueio, $grupo, $desconto, $telefone);
+
+                    $success = 'Usuário cadastrado com sucesso!';
+                    header('Location: /usuarios');
+                } catch (\Exception $e) {
+                    $error = 'Erro ao cadastrar usuário: ' . $e->getMessage();
+                }
             }
 
-            try {
-                // Cadastrar o usuário
-                $id = $this->usuariosModel->createUsuario($nome, $email, $senha, $departamento, $bloqueio, $grupo, $desconto, $telefone);
-
-                // Renderizar a página com mensagem de sucesso e lista atualizada
-                $usuarios = $this->usuariosModel->getAllUsuarios();
-                echo $this->twig->render('usuarios.html', [
-                    'title' => 'Lista de Usuários',
-                    'usuarios' => $usuarios,
-                    'success' => 'Usuário cadastrado com sucesso! ID: ' . $id,
-                ]);
-            } catch (\Exception $e) {
-                // Renderizar a página com mensagem de erro
-                $usuarios = $this->usuariosModel->getAllUsuarios();
-                echo $this->twig->render('usuarios.html', [
-                    'title' => 'Lista de Usuários',
-                    'usuarios' => $usuarios,
-                    'error' => 'Erro ao cadastrar usuário: ' . $e->getMessage(),
-                ]);
-            }
-        } else {
-            // Renderizar a página de usuários
+            // Renderizar a página com mensagens de erro ou sucesso
             $usuarios = $this->usuariosModel->getAllUsuarios();
             echo $this->twig->render('usuarios.html', [
-                'title' => 'Lista de Usuários',
+                'title' => 'Cadastro de Usuários',
                 'usuarios' => $usuarios,
+                'error' => $error ?? null,
+                'success' => $success ?? null,
+            ]);
+        }
+    }
+
+
+
+    public function editar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = filter_input(INPUT_POST, 'id', FILTER_VALIDATE_INT);
+            $nome = trim($_POST['nome']);
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+            $senha = isset($_POST['senha']) ? trim($_POST['senha']) : null;
+            $departamento = trim($_POST['departamento']);
+            $bloqueio = filter_input(INPUT_POST, 'bloqueado', FILTER_VALIDATE_INT);
+            $grupo = trim($_POST['grupo']);
+            $desconto = filter_input(INPUT_POST, 'desconto', FILTER_VALIDATE_FLOAT);
+            $telefone = filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_NUMBER_INT);
+
+            if (empty($nome) || empty($email)) {
+                $error = 'Os campos Nome e Email são obrigatórios.';
+            } else {
+                try {
+                    $hashedPassword = !empty($senha) ? password_hash($senha, PASSWORD_DEFAULT) : null;
+                    $this->usuariosModel->updateUsuario($id, $nome, $email, $hashedPassword, $departamento, $bloqueio, $grupo, $desconto, $telefone);
+                    header('Location: /usuarios');
+                    $success = 'Usuário atualizado com sucesso!';
+                } catch (\Exception $e) {
+                    $error = 'Erro ao atualizar usuário: ' . $e->getMessage();
+                }
+            }
+
+            $usuarios = $this->usuariosModel->getAllUsuarios();
+            echo $this->twig->render('usuarios.html', [
+                'title' => 'Usuários',
+                'usuarios' => $usuarios,
+                'error' => $error ?? null,
+                'success' => $success ?? null,
             ]);
         }
     }

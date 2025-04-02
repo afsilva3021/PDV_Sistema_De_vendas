@@ -4,102 +4,11 @@
 
 {% block content %}
 
-<!-- Topbar -->
-<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-    <!-- Sidebar Toggle (Topbar) -->
-    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-        <i class="fa fa-bars"></i>
-    </button>
-
-    <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-        <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                aria-label="Search" aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
-            </div>
-        </div>
-    </form>
-
-    <!-- Topbar Navbar -->
-    <ul class="navbar-nav ml-auto">
-
-        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-        <li class="nav-item dropdown no-arrow d-sm-none">
-            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <i class="fas fa-search fa-fw"></i>
-            </a>
-            <!-- Dropdown - Messages -->
-            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown">
-                <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                            aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </li>
-
-
-
-        <div class="topbar-divider d-none d-sm-block"></div>
-
-        <!-- Nav Item - User Information -->
-        <li class="nav-item dropdown no-arrow">
-            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
-                    {% if session.NOME %}
-                    {{ session.NOME }}
-                    {% else %}
-                    Usuário
-                    {% endif %}
-                </span>
-                <img class="img-profile rounded-circle" src="./assets/img/logo.png">
-            </a>
-            <!-- Dropdown - User Information -->
-            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Profile
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Settings
-                </a>
-                <a class="dropdown-item" href="#">
-                    <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Activity Log
-                </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                    Logout
-                </a>
-            </div>
-        </li>
-
-    </ul>
-
-</nav>
-<!-- End of Topbar -->
-
 <!-- Begin Page Content -->
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Produtos</h1>
+    <h1 class="h3 mb-2 text-gray-800">Cadastro de usuarios</h1>
     <!-- Exibir mensagem de erro -->
     {% if error %}
     <div class="alert alert-danger text-center" role="alert">{{error}}</div>
@@ -183,9 +92,9 @@
                             <div class="form-row">
                                 <div class="form-group col-md-3">
                                     <label for="inputState">Usuario Bloqueado</label>
-                                    <select id="inputState" class="form-control">
-                                        <option value="0" selected>Não</option>
-                                        <option value="1">Sim</option>
+                                    <select id="inputState" name="status" class="form-control">
+                                        <option value="0" {% if usuario.BLOQUEADO==0 %}selected{% endif %}>Não</option>
+                                        <option value="1" {% if usuario.BLOQUEADO==1 %}selected{% endif %}>Sim</option>
                                     </select>
                                 </div>
                             </div>
@@ -249,10 +158,116 @@
                             <td>{{ usuario.GRUPO }}</td>
                             <td>{{ usuario.TELEFONE }}</td>
                             <td class="text-center">
-                                <button class="btn btn-outline-primary text-center">
-                                    <i class="fa-solid fa-pen-to-square"></i></button>
+                                <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                    data-target="#modalAtualiza{{ usuario.ID }}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
                             </td>
                         </tr>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalAtualiza{{ usuario.ID }}" data-backdrop="static"
+                            data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Atualizar Usuario</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="POST" action="/editar">
+                                        <input type="hidden" name="id" value="{{ usuario.ID }}">
+                                        <!-- Campo oculto para o ID -->
+                                        <div class="modal-body">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="nome">Nome</label>
+                                                    <input type="text" name="nome" class="form-control" id="name"
+                                                        value="{{ usuario.NOME }}" placeholder="Digite o nome" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="email">Email</label>
+                                                    <input type="email" name="email" class="form-control"
+                                                        value="{{ usuario.EMAIL }}" id="email"
+                                                        placeholder="Digite o E-mail" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-6">
+                                                    <label for="senha">Senha</label>
+                                                    <input type="password" name="senha" value="{{ usuario.SENHA }}"
+                                                        id="email" class="form-control" placeholder="" required>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label for="confirma">Confirma senha</label>
+                                                    <input type="password" class="form-control" id="confirma"
+                                                        placeholder="" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="departamento">Departamento</label>
+                                                <input type="text" name="departamento"
+                                                    value="{{ usuario.DEPARTAMENTO }}" class="form-control"
+                                                    id="departamento" placeholder="Informe o Departamento">
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="grupo">Grupo</label>
+                                                    <input type="text" name="grupo" class="form-control" id="groupo"
+                                                        value="{{ usuario.GRUPO }}" placeholder="">
+                                                </div>
+                                                <div class="form-group col-md-4">
+                                                    <label for="state">Pode dar desconto</label>
+                                                    <select id="state" class="form-control">
+                                                        <option value="{{ usuario.DESCONTO }}" selected>Seleciona a
+                                                            opção</option>
+                                                        <option value="0.0">%0</option>
+                                                        <option value="5.0">%5</option>
+                                                        <option value="10.0">%10</option>
+                                                        <option value="15.0">%15</option>
+                                                        <option value="50.0">%100</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-5">
+                                                    <label for="inputTelefone">Telefone</label>
+                                                    <input type="number" name="telefone" class="form-control"
+                                                        id="inputTelefone" value="{{usuario.TELEFONE}}" placeholder=""
+                                                        required>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-3">
+                                                    <label for="inputState">Usuario Bloqueado</label>
+                                                    <select id="bloqueado" name="bloqueado" class="form-control"
+                                                        required>
+                                                        <option selected value="{{usuario.BLOQUEADO}}"></option>
+                                                        <option value="0" {% if usuario.BLOQUEADO==0 %}selected{% endif
+                                                            %}>Não</option>
+                                                        <option value="1" {% if usuario.BLOQUEADO==1 %}selected{% endif
+                                                            %}>Sim</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="gridCheck">
+                                                <label class="form-check-label" name="altera" for="gridCheck">
+                                                    Alterar senha no proximo login
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">Cancelar</button>
+                                            <button type="submit" class="btn btn-primary">Atualiza Dados</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
                         {% else %}
                         <tr>
                             <td>Nenhum Usurario Cadastrado.</td>
@@ -262,6 +277,7 @@
                 </table>
             </div>
         </div>
+
     </div>
 
 </div>

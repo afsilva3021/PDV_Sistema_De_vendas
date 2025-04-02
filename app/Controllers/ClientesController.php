@@ -20,10 +20,11 @@ class ClientesController
   {
 
     try {
-    $clientes = $this->clientesModel->getAllClientes();
+      $clientes = $this->clientesModel->getAllClientes();
       echo $this->twig->render('clientes.html', [
+        'user_name' => $_SESSION['user_name'],
         'title' => 'Clientes',
-        'clientes' => $clientes, 
+        'clientes' => $clientes,
       ]);
     } catch (\Exception $e) {
       echo $this->twig->render('500.html', [

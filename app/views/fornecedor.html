@@ -3,242 +3,154 @@
 {% block title %} {{title}} {% endblock %}
 
 {% block content %}
-<!-- Main Content -->
-<div id="content">
-
-    <!-- Topbar -->
-    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-        <!-- Sidebar Toggle (Topbar) -->
-        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-        </button>
-
-        <!-- Topbar Search -->
-        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                    aria-label="Search" aria-describedby="basic-addon2">
-                <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                    </button>
-                </div>
-            </div>
-        </form>
-
-        <!-- Topbar Navbar -->
-        <ul class="navbar-nav ml-auto">
-
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-                <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-search fa-fw"></i>
-                </a>
-                <!-- Dropdown - Messages -->
-                <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                    aria-labelledby="searchDropdown">
-                    <form class="form-inline mr-auto w-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </li>
 
 
+<!-- Begin Page Content -->
+<div class="container-fluid">
 
-            <div class="topbar-divider d-none d-sm-block"></div>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Cadastro</h1>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Cadastro de Fornecedores</h6>
+            <br>
+            <!-- Button modal Cadastro -->
+            <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"><i class="fa-solid fa-pen-to-square"></i>
+                Cadastrar
+            </button>
+        </div>
 
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                    <img class="img-profile rounded-circle" src="../assets/img/undraw_profile.svg">
-                </a>
-                <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Settings
-                    </a>
-                    <a class="dropdown-item" href="#">
-                        <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Activity Log
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
-
-        </ul>
-
-    </nav>
-    <!-- End of Topbar -->
-
-    <!-- Begin Page Content -->
-    <div class="container-fluid">
-
-        <!-- Page Heading -->
-        <h1 class="h3 mb-2 text-gray-800">Cadastro</h1>
-        <!-- DataTales Example -->
-        <div class="card shadow mb-4">
-            <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Cadastro de Fornecedores</h6>
-                <br>
-                <!-- Button modal Cadastro -->
-                <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal"
-                    data-bs-target="#staticBackdrop"><i class="fa-solid fa-pen-to-square"></i>
-                    Cadastrar
-                </button>
-            </div>
-
-            <!-- Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-                aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastro Clientes</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Formulario Code -->
-
-
-                            <form class="row g-3 needs-validation was-validated" novalidate="">
-                                <div class="col-md-4">
-                                    <label for="validationCustom01" class="form-label">Nome</label>
-                                    <input type="text" class="form-control" id="validationCustom01" value="" required=""
-                                        placeholder="Digite o nome do cliente">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">Telefone</label>
-                                    <input type="text" class="form-control" id="validationCustom02" value="" required=""
-                                        placeholder="Digite o Telefone do cliente">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="validationCustomUsername" class="form-label">Email</label>
-                                    <div class="input-group has-validation">
-                                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                        <input type="text" class="form-control" id="validationCustomUsername"
-                                            aria-describedby="inputGroupPrepend" required=""
-                                            placeholder="Digite o email do Cliente">
-                                        <div class="invalid-feedback">
-                                            Digite um email
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">CNPJ / CPF</label>
-                                    <input type="text" class="form-control" id="validationCustom02" value="" required=""
-                                        placeholder="Digite o CNPJ ou CPF do cliente" minlength="1" maxlength="14">
-                                </div>
-                                <div class="invalid-feedback">
-                                    Digite o CNPJ ou CPF Valido
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="validationCustom03" class="form-label">Endereço</label>
-                                    <input type="text" class="form-control" id="validationCustom03" required=""
-                                        placeholder="Digite o endereço do cliente">
-                                    <div class="invalid-feedback">
-                                        Informe um Endereço
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="validationCustom02" class="form-label">Cidade</label>
-                                    <input type="text" class="form-control" id="validationCustom02" value="" required=""
-                                        placeholder="Informe a Cidade">
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="validationCustom04" class="form-label">Estado</label>
-                                    <select class="form-select" id="validationCustom04" required="">
-                                        <option selected="" disabled="" value="">Choose...</option>
-                                        <option>...</option>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        Selecione um estado valido
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="validationCustom05" class="form-label">CEP</label>
-                                    <input type="text" class="form-control" id="validationCustom05" required=""
-                                        placeholder="Digite o CEP 00000-000">
-                                    <div class="invalid-feedback">
-                                        Informe o CEP valido
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Salvar</button>
-                                </div>
-
-                            </form>
-
-
-                            <!-- End Formulario Code -->
-                        </div>
-
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Cadastro Clientes</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Descrição</th>
-                                <th>Quantidade</th>
-                                <th>Custo</th>
-                                <th>Venda</th>
-                                <th>Alterar</th>
-                            </tr>
-                        </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Descrição</th>
-                                <th>Quantidade</th>
-                                <th>Custo</th>
-                                <th>Venda</th>
-                                <th>Alterar</th>
-                            </tr>
-                        </tfoot>
-                        <tbody>
-                            <tr>
-                                <td id="id"></td>
-                                <td id="descricao"></td>
-                                <td id="quantidade"></td>
-                                <td id="custo"></td>
-                                <td id="valor"></td>
-                                <td id="alterar"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="modal-body">
+                        <!-- Formulario Code -->
+
+
+                        <form class="row g-3 needs-validation was-validated" novalidate="">
+                            <div class="col-md-4">
+                                <label for="validationCustom01" class="form-label">Nome</label>
+                                <input type="text" class="form-control" id="validationCustom01" value="" required=""
+                                    placeholder="Digite o nome do cliente">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="validationCustom02" class="form-label">Telefone</label>
+                                <input type="text" class="form-control" id="validationCustom02" value="" required=""
+                                    placeholder="Digite o Telefone do cliente">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="validationCustomUsername" class="form-label">Email</label>
+                                <div class="input-group has-validation">
+                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                    <input type="text" class="form-control" id="validationCustomUsername"
+                                        aria-describedby="inputGroupPrepend" required=""
+                                        placeholder="Digite o email do Cliente">
+                                    <div class="invalid-feedback">
+                                        Digite um email
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="validationCustom02" class="form-label">CNPJ / CPF</label>
+                                <input type="text" class="form-control" id="validationCustom02" value="" required=""
+                                    placeholder="Digite o CNPJ ou CPF do cliente" minlength="1" maxlength="14">
+                            </div>
+                            <div class="invalid-feedback">
+                                Digite o CNPJ ou CPF Valido
+                            </div>
+                            <div class="col-md-6">
+                                <label for="validationCustom03" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="validationCustom03" required=""
+                                    placeholder="Digite o endereço do cliente">
+                                <div class="invalid-feedback">
+                                    Informe um Endereço
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="validationCustom02" class="form-label">Cidade</label>
+                                <input type="text" class="form-control" id="validationCustom02" value="" required=""
+                                    placeholder="Informe a Cidade">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="validationCustom04" class="form-label">Estado</label>
+                                <select class="form-select" id="validationCustom04" required="">
+                                    <option selected="" disabled="" value="">Choose...</option>
+                                    <option>...</option>
+                                </select>
+                                <div class="invalid-feedback">
+                                    Selecione um estado valido
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="validationCustom05" class="form-label">CEP</label>
+                                <input type="text" class="form-control" id="validationCustom05" required=""
+                                    placeholder="Digite o CEP 00000-000">
+                                <div class="invalid-feedback">
+                                    Informe o CEP valido
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary">Salvar</button>
+                            </div>
+
+                        </form>
+
+
+                        <!-- End Formulario Code -->
+                    </div>
+
                 </div>
             </div>
         </div>
-
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Custo</th>
+                            <th>Venda</th>
+                            <th>Alterar</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Codigo</th>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Custo</th>
+                            <th>Venda</th>
+                            <th>Alterar</th>
+                        </tr>
+                    </tfoot>
+                    <tbody>
+                        <tr>
+                            <td id="id"></td>
+                            <td id="descricao"></td>
+                            <td id="quantidade"></td>
+                            <td id="custo"></td>
+                            <td id="valor"></td>
+                            <td id="alterar"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-    <!-- /.container-fluid -->
 
 </div>
-<!-- End of Main Content -->
+<!-- /.container-fluid -->
+
 {% endblock %}

@@ -51,8 +51,10 @@ class Router
             ],
             'POST' => [
                 '/' => [$authController, 'login'], // Processa o login
-                '/cadastrar' => [$usuariosController, 'cadastrar'], // Processa o cadastro
-                '/editar' => [$usuariosController, 'editar'], // Processa a edição de usuários
+                '/cadastrarUsuario' => [$usuariosController, 'cadastrar'], // Processa o cadastro
+                '/editarUsuarios' => [$usuariosController, 'editar'], // Processa a edição de usuários
+                '/cadastrarProdutos' => [$produtoController, 'cadastrar'], // Processa o cadastro de produtos
+                
 
             ],
         ];
@@ -68,7 +70,7 @@ class Router
                 }
             } elseif (isset($routes[$method][$uri])) {
                 // Middleware de autenticação para rotas protegidas
-                $protectedRoutes = ['/home', '/clientes', '/produtos', '/usuarios', '/cadastrar','/editar'];
+                $protectedRoutes = ['/home', '/clientes', '/produtos', '/usuarios', '/cadastrar','/editar', '/cadastrarProdutos', '/editarUsuarios'];
                 if (in_array($uri, $protectedRoutes) && !isset($_SESSION['user_id'])) {
                     header('Location: /');
                     exit;

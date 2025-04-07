@@ -1,0 +1,35 @@
+# Impedir o acesso ao arquivo .htaccess
+<Files .htaccess>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevenir listagem de diretórios
+Options -Indexes
+
+# Redirecionar HTTP para HTTPS
+RewriteEngine On
+# Verificar se o arquivo solicitado não é uma página válida
+RewriteCond %{REQUEST_URI} /.(php|html|css|js|jpg|jpeg|png|gif|bmp|pdf|txt|zip)$ [NC]
+RewriteRule ^(.*)$ / [L,R=301]
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Bloquear a execução de scripts PHP em diretórios específicos
+<Directory "C:\Users\alex.felix\Documents\electronjs\PDVSISTEM">
+    php_flag engine off
+</Directory>
+
+# Prevenir injeção SQL e XSS
+RewriteEngine On
+RewriteCond %{QUERY_STRING} (\.\.\/|\.\.\\) [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+RewriteCond %{REQUEST_URI} \.([php|pl|py|jsp|asp|htm|html|js|cgi|sh|exe|bat]) [NC]
+RewriteRule ^(.*)$ - [F,L]
+
+# Prevenir hotlinking
+RewriteEngine on
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http(s)?://(www\.)?seusite\.com [NC]
+RewriteRule \.(jpg|jpeg|png|gif|bmp|tiff)$ - [NC,F,L]

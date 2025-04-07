@@ -45,6 +45,10 @@ class UsuariosController
             $desconto = filter_input(INPUT_POST, 'desconto', FILTER_VALIDATE_FLOAT);
             $telefone = filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_NUMBER_INT);
 
+            $error = null; // Inicializar a variável $error
+            $success = null; // Inicializar a variável $success
+
+
             // Validação básica
             if (empty($nome) || empty($email) || empty($senha)) {
                 $error = 'Os campos Nome, Email e Senha são obrigatórios.';
@@ -57,7 +61,6 @@ class UsuariosController
                     $this->usuariosModel->createUsuario($nome, $email, $hashedPassword, $departamento, $bloqueio, $grupo, $desconto, $telefone);
 
                     $success = 'Usuário cadastrado com sucesso!';
-                    header('Location: /usuarios');
                 } catch (\Exception $e) {
                     $error = 'Erro ao cadastrar usuário: ' . $e->getMessage();
                 }
@@ -89,25 +92,30 @@ class UsuariosController
             $desconto = filter_input(INPUT_POST, 'desconto', FILTER_VALIDATE_FLOAT);
             $telefone = filter_input(INPUT_POST, 'telefone', FILTER_SANITIZE_NUMBER_INT);
 
+            $error = null; // Inicializar a variável $error
+            $success = null; // Inicializar a variável $success
+
             if (empty($nome) || empty($email)) {
                 $error = 'Os campos Nome e Email são obrigatórios.';
             } else {
                 try {
                     $hashedPassword = !empty($senha) ? password_hash($senha, PASSWORD_DEFAULT) : null;
                     $this->usuariosModel->updateUsuario($id, $nome, $email, $hashedPassword, $departamento, $bloqueio, $grupo, $desconto, $telefone);
-                    header('Location: /usuarios');
                     $success = 'Usuário atualizado com sucesso!';
                 } catch (\Exception $e) {
                     $error = 'Erro ao atualizar usuário: ' . $e->getMessage();
                 }
             }
 
+            // Obter a lista de usuários para renderizar a página
             $usuarios = $this->usuariosModel->getAllUsuarios();
+
+            // Renderizar a página com mensagens de erro ou sucesso
             echo $this->twig->render('usuarios.html', [
                 'title' => 'Usuários',
                 'usuarios' => $usuarios,
-                'error' => $error ?? null,
-                'success' => $success ?? null,
+                'error' => $error,
+                'success' => $success,
             ]);
         }
     }

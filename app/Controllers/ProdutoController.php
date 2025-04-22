@@ -3,17 +3,20 @@
 namespace App\Controllers;
 
 use App\Models\ProdutosModel;
+use App\Models\CategoriaModel;
 use Twig\Environment;
 
 class ProdutoController
 {
 
     private $produtosModel;
+    private $categoriaModel;
     private $twig;
 
     public function __construct(Environment $twig)
     {
         $this->produtosModel = new ProdutosModel();
+        $this->categoriaModel = new CategoriaModel();
         $this->twig = $twig;
     }
 
@@ -36,7 +39,7 @@ class ProdutoController
     public function cadastrar()
     {
         $produtos = $this->produtosModel->getAllProdutos();
-        
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $erro = null;
             $sucess = null;
@@ -67,13 +70,16 @@ class ProdutoController
             }
 
             // Renderizar a página com mensagens de erro ou sucesso
+            $produtos = $this->produtosModel->getAllProdutos();
             echo $this->twig->render('produtos.html', [
                 'title' => 'Produtos',
+                'produtos' => $produtos,
                 'error' => $erro,
                 'success' => $sucess,
             ]);
         } else {
             // Renderizar a página de cadastro
+            $produtos = $this->produtosModel->getAllProdutos();
             echo $this->twig->render('produtos.html', [
                 'title' => 'Produtos',
                 'produtos' => $produtos,
@@ -81,5 +87,50 @@ class ProdutoController
         }
     }
 
-    public function updateProduto($id)
+    public function editar()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
+            $nome = trim($_POST['nome']);
+            $codigo = trim($_POST['codigo']);
+            $ean = filter_input(INPUT_POST, 'ean', FILTER_SANITIZE_NUMBER_INT);
+            $preco = filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_NUMBER_FLOAT);
+            $custo = filter_input(INPUT_POST, 'custo', FILTER_SANITIZE_NUMBER_FLOAT);
+            $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_SANITIZE_NUMBER_INT);
+            if (is_null($quantidade) || $quantidade === false || $quantidade === '') {
+                $quantidade = 0;
+            }
+            $descricao = trim($_POST['descricao']);
+            $categoria = filter_input(INPUT_POST, 'categoria', FILTER_SANITIZE_NUMBER_INT);
+            $status = trim($_POST['status']);
+            $imagem = null; // Não salvar imagem
+
+            $error = null;
+            $sucess = null;
+
+            // Verificar campos obrigados
+            if (empty($nome) || empty($codigo) || empty($preco)) {
+                $error = 'Nome do produto, Código e Preço são obrigatórios.';
+            } else {
+                try {
+                    $this->produtosModel->updateProduto($id, $nome, $codigo, $ean, $preco, $custo, $quantidade, $categoria, $descricao, $imagem, $status);
+                    $sucess = 'Produto atualizado com sucesso';
+                } catch (\Exception $e) {
+                    $error = 'Erro ao atualizar o produto: ' . $e->getMessage();
+                }
+            }
+
+            $categoria = $this->categoriaModel->getAllCategorias($categoria);
+
+            $produtos = $this->produtosModel->getAllProdutos();
+
+            echo $this->twig->render('produtos.html', [
+                'title' => 'Produros',
+                'produtos' => $produtos,
+                'categoria' => $categoria,
+                'error' => $error,
+                'success' => $sucess,
+            ]);
+        }
+    }
 }

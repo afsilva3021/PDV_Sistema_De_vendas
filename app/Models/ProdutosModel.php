@@ -48,18 +48,37 @@ class ProdutosModel
   }
 
 
-  public function editarProduto($id, $nome, $codigo, $ean, $descricao, $custo, $preco, $quantidade, $categoria, $image, $status)
+  public function updateProduto($id, $nome, $codigo, $ean, $descricao, $custo, $preco, $quantidade, $categoria, $imagem, $status)
   {
     try {
       $dbConect = new Database();
       $pdo = $dbConect->connect();
 
-      $stmt = $pdo->prepare("INSERT INTO PRODUTOS (NOME, CODIGO, EAN, DESCRICAO, CUSTO, PRECO, QUANTIDADE_ESTOQUE, CATEGORIA_ID, IMAGE, STATUS)
-              VALUES (:nome, :codigo, :ean, :descricao, :custo, :preco, :quantidade_estoque, :categoria_id, :image, :status)");
+      $query = "UPDATE PRODUTOS
+                  SET NOME = :nome, CODIGO = :codigo, EAN = :ean, DESCRICAO = :descricao, 
+                      CUSTO = :custo, PRECO = :preco, QUANTIDADE_ESTOQUE = :quantidade, 
+                      CATEGORIA_ID = :categoria, IMAGEM = :imagem, STATUS = :status
+                  WHERE ID = :id";
 
-    $stmt->brindParam(':nome', $nome, PDO::PARAM_STR);
-    
+      $stmt = $pdo->prepare($query);
+
+      $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+      $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
+      $stmt->bindParam(':codigo', $codigo, PDO::PARAM_INT);
+      $stmt->bindParam(':ean', $ean, PDO::PARAM_INT);
+      $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
+      $stmt->bindParam(':custo', $custo, PDO::PARAM_STR);
+      $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
+      $stmt->bindParam(':quantidade', $quantidade, PDO::PARAM_INT);
+      $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
+      $stmt->bindParam(':imagem', $imagem, PDO::PARAM_STR);
+      $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+
+      $stmt->execute();
+
+      return $stmt->rowCount();
     } catch (\Exception $e) {
+      throw new \Exception("Erro ao editar produto: " . $e->getMessage());
     }
   }
 }

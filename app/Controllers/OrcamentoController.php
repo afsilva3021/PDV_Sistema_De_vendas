@@ -13,11 +13,12 @@ class OrcamentoController
     $this->twig = $twig;
   }
 
-  public function index()
+  public function orcamento()
   {
     // Render the index view
-    echo $this->twig->render('orccamento.html', [
+    echo $this->twig->render('orcamento.html', [
       'user_name' => $_SESSION['user_name'],
+      'numOrcamento' => rand(1,999999),
       'title' => 'Orçamento',
     ]);
   }

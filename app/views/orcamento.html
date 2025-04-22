@@ -1,0 +1,194 @@
+{% extends "base.html" %}
+
+{% block title %}
+	{{title}}
+{% endblock %}
+
+{% block content %}
+
+
+	<!-- Begin Page Content -->
+	<div
+		class="container-fluid">
+
+		<!-- Page Heading -->
+		<h1 class="h3 mb-2 text-gray-800">Orçamentos</h1>
+		<!-- DataTales Example -->
+		<div class="card shadow mb-4">
+			<div class="card-header py-3">
+				<h6 class="m-0 font-weight-bold text-primary">Orçamentos / Vendas</h6>
+				<br>
+				<button class="btn btn-outline-primary" data-toggle="modal" data-target="#staticBackdrop">
+					<i class="fa-solid fa-pen-to-square"></i>
+					Criar orçamento</button>
+			</div>
+
+			<!-- Modal -->
+			<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+				<div class="modal-dialog modal-xl">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="staticBackdropLabel">Novo Orçamento</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<form>
+								<form method="POST" action="/cadastroOrcamento">
+									<div class="form-row ps-3">
+										<div class="form-group col-sm-2">
+											<label for="numOrcamento">Num Orçamento</label>
+											<input type="number" class="form-control" name="numOrcamento" id="numOrcamento" value="{{numOrcamento}}" disabled>
+										</div>
+										<div class="form-group col-sm-2">
+											<label for="vendedor">Vendedor</label>
+											<input type="text" class="form-control" name="vendedor" id="vendedor" value="{{user_name}}" disabled>
+										</div>
+										<div class="form-group col-sm-5">
+											<label for="inputAddress">Cliente</label>
+											<input type="text" class="form-control" id="inputAddress" placeholder="Nome do Cliented">
+										</div>
+										<div class="form-group col-sm-3">
+											<label for="inputAddress">CNPJ/CPF</label>
+											<input type="text" class="form-control" id="inputAddress" placeholder="Nome do Cliented">
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label for="inputAddress2">Address 2</label>
+										<input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+									</div>
+									<div class="form-row">
+										<div class="form-group col-md-6">
+											<label for="inputCity">City</label>
+											<input type="text" class="form-control" id="inputCity">
+										</div>
+										<div class="form-group col-md-4">
+											<label for="inputState">State</label>
+											<select id="inputState" class="form-control">
+												<option selected>Choose...</option>
+												<option>...</option>
+											</select>
+										</div>
+										<div class="form-group col-md-2">
+											<label for="inputZip">Zip</label>
+											<input type="text" class="form-control" id="inputZip">
+										</div>
+									</div>
+									<table class="table">
+										<thead class="thead-dark">
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">First</th>
+												<th scope="col">Last</th>
+												<th scope="col">Handle</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row">1</th>
+												<td>Mark</td>
+												<td>Otto</td>
+												<td>@mdo</td>
+											</tr>
+											<tr>
+												<th scope="row">2</th>
+												<td>Jacob</td>
+												<td>Thornton</td>
+												<td>@fat</td>
+											</tr>
+											<tr>
+												<th scope="row">3</th>
+												<td>Larry</td>
+												<td>the Bird</td>
+												<td>@twitter</td>
+											</tr>
+										</tbody>
+									</table>
+
+									<table class="table">
+										<thead class="thead-light">
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">First</th>
+												<th scope="col">Last</th>
+												<th scope="col">Handle</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th scope="row">1</th>
+												<td>Mark</td>
+												<td>Otto</td>
+												<td>@mdo</td>
+											</tr>
+											<tr>
+												<th scope="row">2</th>
+												<td>Jacob</td>
+												<td>Thornton</td>
+												<td>@fat</td>
+											</tr>
+											<tr>
+												<th scope="row">3</th>
+												<td>Larry</td>
+												<td>the Bird</td>
+												<td>@twitter</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+
+
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Understood</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="card-body">
+				<div class="table-responsive">
+					<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+						<thead>
+							<tr>
+								<th>Codigo</th>
+								<th>Descrição</th>
+								<th>Quantidade</th>
+								<th>Custo</th>
+								<th>Venda</th>
+								<th>Alterar</th>
+							</tr>
+						</thead>
+						<tfoot>
+							<tr>
+								<th>Codigo</th>
+								<th>Descrição</th>
+								<th>Quantidade</th>
+								<th>Custo</th>
+								<th>Venda</th>
+								<th>Alterar</th>
+							</tr>
+						</tfoot>
+						<tbody>
+							<tr>
+								<td id="codo"></td>
+								<td id="descricao"></td>
+								<td id="quantidade"></td>
+								<td id="custo"></td>
+								<td id="valor"></td>
+								<td id="alterar"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<!-- /.container-fluid -->
+
+{% endblock %}

@@ -7,6 +7,7 @@ use App\Controllers\HomeController;
 use App\Controllers\UsuariosController;
 use App\Controllers\ProdutoController; // Corrigido o nome da classe
 use App\Controllers\ClientesController;
+use App\Controllers\OrcamentoController;
 use App\Models\UserModel;
 
 class Router
@@ -39,10 +40,12 @@ class Router
         $produtoController = new ProdutoController($this->twig); // Corrigido
         $clientesController = new ClientesController($this->twig);
         $usuariosController = new UsuariosController($this->twig);
+        $orcamentoController = new OrcamentoController($this->twig);
 
         $routes = [
             'GET' => [
                 '/' => [$authController, 'login'], // Exibe o formulário de login
+                '/orcamento' => [$orcamentoController, 'orcamento'],
                 '/home' => [$homeController, 'home'], // Página inicial após login
                 '/clientes' => [$clientesController, 'clientes'], // Página de clientes
                 '/produtos' => [$produtoController, 'produtos'], // Página de produtos
@@ -54,7 +57,8 @@ class Router
                 '/cadastrarUsuario' => [$usuariosController, 'cadastrar'], // Processa o cadastro
                 '/editarUsuarios' => [$usuariosController, 'editar'], // Processa a edição de usuários
                 '/cadastrarProdutos' => [$produtoController, 'cadastrar'], // Processa o cadastro de produtos
-                
+                '/editarProdutos' => [$produtoController, 'editar'], // Processa o cadastro de produtos
+
 
             ],
         ];
@@ -65,12 +69,14 @@ class Router
                 $id = $matches[1]; // Extrai o ID da URI
                 if ($method === 'GET') {
                     call_user_func([$usuariosController, 'editar'], $id); // Exibe o formulário de edição
+                    call_user_func([$produtoController, 'editar'], $id);
                 } elseif ($method === 'POST') {
                     call_user_func([$usuariosController, 'editar'], $id); // Processa a atualização
+                    call_user_func([$produtoController, 'editar'], $id);
                 }
             } elseif (isset($routes[$method][$uri])) {
                 // Middleware de autenticação para rotas protegidas
-                $protectedRoutes = ['/home', '/clientes', '/produtos', '/usuarios', '/cadastrar','/editar', '/cadastrarProdutos', '/editarUsuarios'];
+                $protectedRoutes = ['/home', '/clientes', '/produtos', '/orcamento','/usuarios', '/cadastrarUsuario', '/cadastrarProdutos', '/editarUsuarios', '/editarProdutos'];
                 if (in_array($uri, $protectedRoutes) && !isset($_SESSION['user_id'])) {
                     header('Location: /');
                     exit;

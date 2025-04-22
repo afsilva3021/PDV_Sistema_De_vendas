@@ -97,7 +97,6 @@ class UsuariosModel
       // Vincular a senha apenas se ela for fornecida
       if (!empty($senha)) {
         $hashedPassword = password_hash($senha, PASSWORD_DEFAULT);
-        error_log("Hash gerado para a senha: " . $hashedPassword);
         $stmt->bindParam(':senha', $senha, PDO::PARAM_STR);
       }
 

@@ -6,5 +6,5 @@ $documentRoot = "C:\Users\alex.felix\Documents\electronjs\PDVSISTEM\public\"  # 
 $processos = Get-Process | Where-Object { $_.ProcessName -eq "php" }
 if ($processos.Count -eq 0) {
     # Iniciar o servidor PHP
-    Start-Process $phpPath -ArgumentList "-S 172.31.200.121:53053 -t $documentRoot"
+    Start-Process $phpPath -ArgumentList "-S localhost:8080 -t $documentRoot"
 }

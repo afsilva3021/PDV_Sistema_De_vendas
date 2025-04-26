@@ -5,6 +5,8 @@ namespace App\Controllers;
 use App\Models\ProdutosModel;
 use App\Models\CategoriaModel;
 use Twig\Environment;
+use Brick\Math\BigDecimal;
+
 
 class ProdutoController
 {
@@ -35,6 +37,7 @@ class ProdutoController
             ]);
         }
     }
+    
 
     public function cadastrar()
     {
@@ -51,10 +54,23 @@ class ProdutoController
             $preco = filter_input(INPUT_POST, 'preco', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $custo = filter_input(INPUT_POST, 'custo', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $quantidade = filter_input(INPUT_POST, 'quantidade', FILTER_SANITIZE_NUMBER_INT);
-            $descricao = trim($_POST['descricao']);
             $categoria = filter_input(INPUT_POST, 'categoria', FILTER_SANITIZE_NUMBER_INT);
+            $descricao = trim($_POST['descricao']);
             $status = trim($_POST['status']);
             $imagem = null; // Não salvar imagem
+
+            if (empty($nome) || empty($codigo) || empty($preco) || empty($quantidade) || empty($status)) {
+                $erro = "Os campos nome, código, preço, quantidade e status são obrigatórios.";
+            } elseif (empty($categoria) || !$this->categoriaModel->getAllCategorias($categoria)) {
+                $erro = "A categoria selecionada é inválida.";
+            } else {
+                try {
+                    $this->produtosModel->createProduto($nome, $codigo, $ean, $descricao, $custo, $preco, $quantidade, $categoria, $imagem, $status);
+                    $sucess = "Cadastro realizado com sucesso!";
+                } catch (\Exception $e) {
+                    $erro = 'Erro ao cadastrar produto: ' . $e->getMessage();
+                }
+            }
 
             // Verificar campos obrigatórios
             if (empty($nome) || empty($codigo) || empty($preco) || empty($quantidade) || empty($status)) {
@@ -101,7 +117,6 @@ class ProdutoController
                 $quantidade = 0;
             }
             $descricao = trim($_POST['descricao']);
-            $categoria = filter_input(INPUT_POST, 'categoria', FILTER_SANITIZE_NUMBER_INT);
             $status = trim($_POST['status']);
             $imagem = null; // Não salvar imagem
 
@@ -113,21 +128,18 @@ class ProdutoController
                 $error = 'Nome do produto, Código e Preço são obrigatórios.';
             } else {
                 try {
-                    $this->produtosModel->updateProduto($id, $nome, $codigo, $ean, $preco, $custo, $quantidade, $categoria, $descricao, $imagem, $status);
+                    $this->produtosModel->updateProduto($id, $nome, $codigo, $ean, $preco, $custo, $quantidade, $descricao, $imagem, $status);
                     $sucess = 'Produto atualizado com sucesso';
                 } catch (\Exception $e) {
                     $error = 'Erro ao atualizar o produto: ' . $e->getMessage();
                 }
             }
 
-            $categoria = $this->categoriaModel->getAllCategorias($categoria);
-
             $produtos = $this->produtosModel->getAllProdutos();
 
             echo $this->twig->render('produtos.html', [
                 'title' => 'Produros',
                 'produtos' => $produtos,
-                'categoria' => $categoria,
                 'error' => $error,
                 'success' => $sucess,
             ]);

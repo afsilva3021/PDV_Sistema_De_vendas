@@ -28,7 +28,7 @@ class ProdutosModel
 
       // Inserir os dados no banco de dados
       $stmt = $pdo->prepare("INSERT INTO PRODUTOS (NOME, CODIGO, EAN, DESCRICAO, CUSTO, PRECO, QUANTIDADE_ESTOQUE, CATEGORIA_ID, IMAGEM, STATUS)
-                               VALUES (:nome, :codigo, :ean, :descricao, :custo, :preco, :quantidade, :categoria, :imagem, :status)");
+                                 VALUES (:nome, :codigo, :ean, :descricao, :custo, :preco, :quantidade, :categoria, :imagem, :status)");
 
       $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
       $stmt->bindParam(':codigo', $codigo, PDO::PARAM_INT);
@@ -37,8 +37,8 @@ class ProdutosModel
       $stmt->bindParam(':custo', $custo, PDO::PARAM_STR);
       $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
       $stmt->bindParam(':quantidade', $quantidade, PDO::PARAM_INT);
-      $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
-      $stmt->bindParam(':imagem', $imagem, PDO::PARAM_STR); // Certifique-se de vincular o parâmetro :imagem
+      $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT); // Vincular o parâmetro :categoria
+      $stmt->bindParam(':imagem', $imagem, PDO::PARAM_STR);
       $stmt->bindParam(':status', $status, PDO::PARAM_STR);
 
       $stmt->execute();
@@ -47,8 +47,21 @@ class ProdutosModel
     }
   }
 
+  public function produtoExiste($id)
+  {
+    $dbConect = new Database();
+    $pdo = $dbConect->connect();
 
-  public function updateProduto($id, $nome, $codigo, $ean, $descricao, $custo, $preco, $quantidade, $categoria, $imagem, $status)
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM produtos WHERE id = :id");
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    return $stmt->fetchColumn() > 0;
+  }
+
+
+
+  public function updateProduto($id, $nome, $codigo, $ean, $preco, $custo, $quantidade, $descricao, $imagem, $status)
   {
     try {
       $dbConect = new Database();
@@ -57,7 +70,7 @@ class ProdutosModel
       $query = "UPDATE PRODUTOS
                   SET NOME = :nome, CODIGO = :codigo, EAN = :ean, DESCRICAO = :descricao, 
                       CUSTO = :custo, PRECO = :preco, QUANTIDADE_ESTOQUE = :quantidade, 
-                      CATEGORIA_ID = :categoria, IMAGEM = :imagem, STATUS = :status
+                      IMAGEM = :imagem, STATUS = :status
                   WHERE ID = :id";
 
       $stmt = $pdo->prepare($query);
@@ -70,7 +83,6 @@ class ProdutosModel
       $stmt->bindParam(':custo', $custo, PDO::PARAM_STR);
       $stmt->bindParam(':preco', $preco, PDO::PARAM_STR);
       $stmt->bindParam(':quantidade', $quantidade, PDO::PARAM_INT);
-      $stmt->bindParam(':categoria', $categoria, PDO::PARAM_INT);
       $stmt->bindParam(':imagem', $imagem, PDO::PARAM_STR);
       $stmt->bindParam(':status', $status, PDO::PARAM_STR);
 

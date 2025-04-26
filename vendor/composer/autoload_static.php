@@ -44,6 +44,10 @@ class ComposerStaticInitc2dbd93f544298c9a7f7789b639a9aab
         array (
             'Core\\' => 5,
         ),
+        'B' => 
+        array (
+            'Brick\\Math\\' => 11,
+        ),
         'A' => 
         array (
             'App\\' => 4,
@@ -82,6 +86,10 @@ class ComposerStaticInitc2dbd93f544298c9a7f7789b639a9aab
         'Core\\' => 
         array (
             0 => __DIR__ . '/../..' . '/core',
+        ),
+        'Brick\\Math\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/brick/math/src',
         ),
         'App\\' => 
         array (

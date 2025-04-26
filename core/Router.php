@@ -37,28 +37,27 @@ class Router
 
         $authController = new AuthController($this->userModel, $this->twig);
         $homeController = new HomeController($this->twig);
-        $produtoController = new ProdutoController($this->twig); // Corrigido
+        $produtoController = new ProdutoController($this->twig);
         $clientesController = new ClientesController($this->twig);
         $usuariosController = new UsuariosController($this->twig);
         $orcamentoController = new OrcamentoController($this->twig);
 
         $routes = [
             'GET' => [
-                '/' => [$authController, 'login'], // Exibe o formulário de login
+                '/' => [$authController, 'login'],
                 '/orcamento' => [$orcamentoController, 'orcamento'],
-                '/home' => [$homeController, 'home'], // Página inicial após login
-                '/clientes' => [$clientesController, 'clientes'], // Página de clientes
-                '/produtos' => [$produtoController, 'produtos'], // Página de produtos
-                '/usuarios' => [$usuariosController, 'usuarios'], // Página de usuários
-                '/logout' => [$authController, 'logout'], // Rota para logoff
+                '/home' => [$homeController, 'home'],
+                '/clientes' => [$clientesController, 'clientes'],
+                '/produtos' => [$produtoController, 'produtos'],
+                '/usuarios' => [$usuariosController, 'usuarios'],
+                '/logout' => [$authController, 'logout'],
             ],
             'POST' => [
-                '/' => [$authController, 'login'], // Processa o login
-                '/cadastrarUsuario' => [$usuariosController, 'cadastrar'], // Processa o cadastro
-                '/editarUsuarios' => [$usuariosController, 'editar'], // Processa a edição de usuários
-                '/cadastrarProdutos' => [$produtoController, 'cadastrar'], // Processa o cadastro de produtos
-                '/editarProdutos' => [$produtoController, 'editar'], // Processa o cadastro de produtos
-
+                '/' => [$authController, 'login'],
+                '/cadastrarUsuario' => [$usuariosController, 'cadastrar'],
+                '/editarUsuarios' => [$usuariosController, 'editar'],
+                '/cadastrarProdutos' => [$produtoController, 'cadastrar'],
+                '/editarProdutos' => [$produtoController, 'editar'],
 
             ],
         ];

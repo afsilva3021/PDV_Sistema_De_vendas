@@ -45,6 +45,7 @@ Um sistema de **Ponto de Venda (PDV)** desenvolvido em **PHP 8.4**, com arquitet
 </br>
 └── README.md
 </br>
+
 ## ⚙️ Instalação
 
 1. Clone o repositório:

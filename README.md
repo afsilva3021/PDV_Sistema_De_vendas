@@ -21,8 +21,7 @@ Um sistema de **Ponto de Venda (PDV)** desenvolvido em **PHP 8.4**, com arquitet
 
 ## 📁 Estrutura do Projeto
 
-PDV_Sistema_De_vendas/
-│
+#PDV_Sistema_De_vendas/</br>
 ├── app/ # Código principal (MVC)
 │ ├── Controllers/
 │ ├── Models/

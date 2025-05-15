@@ -24,3 +24,5 @@ cache/
 
 .env
 config/database.php
+
+StartSistem.ps1

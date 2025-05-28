@@ -1,4 +1,4 @@
-# PDV - Sistema de Vendas
+# Mini ERP - NextERP
 
 Um sistema de **Ponto de Venda (PDV)** desenvolvido em **PHP 8.4**, com arquitetura **MVC**, integrado ao **MariaDB** e utilizando o **Composer** para gerenciamento de dependências.
 

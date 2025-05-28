@@ -19,8 +19,6 @@ class VendasController
         echo $this->twig->render('vendas.html', [
             'user_name' => $_SESSION['user_name'],
             'title' => 'Vendas',
-            'numped' => rand(0, 999999),
-            'dthoje' => date('Y-m-d'),
         ]);
     }
 }

@@ -18,8 +18,9 @@ class OrcamentoController
     // Render the index view
     echo $this->twig->render('orcamento.html', [
       'user_name' => $_SESSION['user_name'],
-      'numOrcamento' => rand(1,999999),
       'title' => 'Orçamento',
+      'numped' => rand(0, 999999),
+      'dthoje' => date('Y-m-d'),
     ]);
   }
 }

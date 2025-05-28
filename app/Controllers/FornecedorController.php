@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use Twig\Environment;
 
-class FornecedorControllers
+class FornecedorController
 {
     private $twig;
 

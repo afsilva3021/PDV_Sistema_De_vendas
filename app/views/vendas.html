@@ -1,8 +1,6 @@
 {% extends 'layout.html' %}
 
-{% block title %}
-{{title}}
-{% endblock %}
+{% block title %} {{title}} {% endblock %}
 
 {% block content %}
 
@@ -10,109 +8,24 @@
 <div class="container-fluid">
 
 	<!-- Page Heading -->
-	<h1 class="h3 mb-2 text-gray-800">Cadastro de produtos</h1>
-	<!-- Exibir mensagem de erro -->
+	<h1 class="h3 mb-2 text-gray-800">Vendas</h1>
+	<!-- Exibir mensagem de erro
 	{% if error %}
 	<div class="alert alert-danger text-center" role="alert">{{error}}</div>
 	{% endif %}
 
-	<!-- Exibir mensagem de sucesso -->
+	 Exibir mensagem de sucesso
 	{% if success %}
 	<div class="alert alert-success text-center" role="alert">{{ success }}</div>
 	{% endif %}
-	<!-- DataTales Example -->
+	DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary"></h6>
-			<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#staticBackdrop">
-				<i class="fa-solid fa-pen-to-square"></i>
-				Cadastrar</button>
+			<h6 class="m-0 font-weight-bold text-primary mt-3"></h6>
+			<a class="btn btn-outline-warning " href="/orcamento">
+				<i class="fa-solid fa-pen-to-square"></i>Vendas</a>
 		</div>
-		<form method="POST" action="/cadastrarProdutos">
-			<!-- Modal -->
-			<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1"
-				aria-labelledby="staticBackdropLabel" aria-hidden="true">
-				<div class="modal-dialog modal-xl">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="staticBackdropLabel">Cadastro de produtos</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<div class="form-row">
-								<div class="form-group col-md-4">
-									<label for="nome">Nome</label>
-									<input type="text" class="form-control" name="nome" id="name"
-										placeholder="Digite o nome" required>
-								</div>
-								<div class="form-group col-sm-4">
-									<label for="codigo">Codigo</label>
-									<input type="texte" class="form-control" name="codigo" id="codigo"
-										placeholder="Codigo do produto" required>
-								</div>
-								<div class="form-group col-sm-4">
-									<label for="ean">Ean</label>
-									<input type="text" class="form-control" name="codigoEan" id="ean"
-										placeholder="Ean Codigo de fabrica" required>
-								</div>
-							</div>
-							<div class="form-row">
-								<div class="form-group col-sm-3">
-									<label for="preco">Preco</label>
-									<input type="text" class="form-control" name="preco" id="preco" placeholder="R$:***"
-										required>
-								</div>
-								<div class="form-group col-sm-3">
-									<label for="custo">Custo</label>
-									<input type="text" class="form-control" name="custo" id="custo"
-										placeholder="Custo do produto">
-								</div>
-								<div class="form-group col-md-3">
-									<label for="quantidade">Quantiadade</label>
-									<input type="number" class="form-control" name="quantidade" id="quantidade"
-										placeholder="0">
-								</div>
-								<div class="form-group col-md-3">
-									<label for="categoria">Categoria</label>
-									<select class="form-control" name="categoria" id="categoria" required>
-										<option value="">Selecione uma categoria</option>
-										{% for categoria in categorias %}
-										<option value="{{ categoria.id }}">{{ categoria.nome }}</option>
-										{% endfor %}
-									</select>
-								</div>
-							</div>
-
-							<div class="form-row">
-								<label for="descricao">Descrição do produto</label>
-								<textarea class="form-control" name="descricao" id="descricao" rows="7"
-									cols="7"></textarea>
-							</div>
-							<br>
-							<div class="form-row">
-								<div class="form-group col-md-3">
-									<label for="status">Produto Ativo / Inativo</label>
-									<select class="form-control" name="status" id="status">
-										<option value="inativo" {% if produto.STATUS=='inativo' %} selected {% endif %}>
-											Inativo
-										</option>
-										<option value="ativo" {% if produto.STATUS=='ativo' %} selected {% endif %}>
-											Ativo
-										</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-							<button type="submit" class="btn btn-primary">Salvar</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
+		
 		<div class="card-body">
 			<div class="table-responsive">
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -144,15 +57,11 @@
 						{% for produto in produtos %}
 						<tr class="text-center">
 							{% if produto.STATUS == 'ativo' %}
-							<td class="text-center"><img
-									src="/assets/img/legendas/verde.png"
-									alt="clew"></td>
+							<td class="text-center"><img src="/assets/img/legendas/verde.png" alt="clew"></td>
 							{% endif %}
 
 							{% if produto.STATUS == 'inativo' %}
-							<td class="text-center"><img
-									src="/assets/img/legendas/vermelho.png"
-									alt="clew"></td>
+							<td class="text-center"><img src="/assets/img/legendas/vermelho.png" alt="clew"></td>
 							{% endif %}
 							<td>{{ produto.NOME }}</td>
 							<td>{{ produto.CODIGO }}</td>
@@ -180,8 +89,8 @@
 											<span aria-hidden="true">&times;</span>
 										</button>
 									</div>
-									<form method="POST" action="/editarProdutos">
-										<input type="hidden" name="id" value="{{ produto.ID }}">
+									<form method="POST" action="/orcamento/atualizar">
+										<input type="hidden" name="id" value="{{ orcamento.ID }}">
 										<div class="modal-body">
 											<div class="form-row">
 												<div class="form-group col-md-4">

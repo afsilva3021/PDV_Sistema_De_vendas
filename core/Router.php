@@ -5,9 +5,11 @@ namespace Core;
 use App\Controllers\AuthController;
 use App\Controllers\HomeController;
 use App\Controllers\UsuariosController;
-use App\Controllers\ProdutoController; // Corrigido o nome da classe
+use App\Controllers\ProdutoController;
 use App\Controllers\ClientesController;
+use App\Controllers\FornecedorController;
 use App\Controllers\OrcamentoController;
+use App\Controllers\VendasController;
 use App\Models\UserModel;
 
 class Router
@@ -28,7 +30,7 @@ class Router
         $this->twig->addExtension(new \Twig\Extension\DebugExtension());
     }
 
-    public function route()
+    public function route(): void
     {
         session_start();
 
@@ -39,8 +41,10 @@ class Router
         $homeController = new HomeController($this->twig);
         $produtoController = new ProdutoController($this->twig);
         $clientesController = new ClientesController($this->twig);
+        $fornecedorController = new FornecedorController($this->twig); 
         $usuariosController = new UsuariosController($this->twig);
         $orcamentoController = new OrcamentoController($this->twig);
+        $vendasController = new VendasController($this->twig);
 
         $routes = [
             'GET' => [
@@ -51,6 +55,8 @@ class Router
                 '/produtos' => [$produtoController, 'produtos'],
                 '/usuarios' => [$usuariosController, 'usuarios'],
                 '/logout' => [$authController, 'logout'],
+                '/vendas' => [$vendasController, 'vendas'],
+                '/fornecedor' => [$fornecedorController,'fornecedor'],
             ],
             'POST' => [
                 '/' => [$authController, 'login'],

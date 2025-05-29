@@ -21,8 +21,8 @@
 	DataTales Example -->
 	<div class="card shadow mb-4">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary mt-3"></h6>
-			<a class="btn btn-outline-warning " href="/orcamento">
+			<h6 class="m-0 font-weight-bold text-primary"></h6>
+			<a class="btn btn-outline-warning" href="/orcamento">
 				<i class="fa-solid fa-pen-to-square"></i>Vendas</a>
 		</div>
 		
@@ -54,13 +54,18 @@
 						</tr>
 					</tfoot>
 					<tbody>
-						{% for produto in produtos %}
+						{% for venda in vendas %}
 						<tr class="text-center">
-							{% if produto.STATUS == 'ativo' %}
+							{% if venda.STATUS == 'pendent' %}
 							<td class="text-center"><img src="/assets/img/legendas/verde.png" alt="clew"></td>
 							{% endif %}
-
-							{% if produto.STATUS == 'inativo' %}
+							{% if produto.STATUS == 'aprovado' %}
+							<td class="text-center"><img src="/assets/img/legendas/vermelho.png" alt="clew"></td>
+							{% endif %}
+							{% if produto.STATUS == 'rejeitado' %}
+							<td class="text-center"><img src="/assets/img/legendas/vermelho.png" alt="clew"></td>
+							{% endif %}
+							{% if produto.STATUS == 'expirado' %}
 							<td class="text-center"><img src="/assets/img/legendas/vermelho.png" alt="clew"></td>
 							{% endif %}
 							<td>{{ produto.NOME }}</td>

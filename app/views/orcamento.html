@@ -57,7 +57,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-row align-items-center col-12">
+				<div class="form-row align-items-center col-12 mt-4">
 					<div class="col-2">
 						<label class="form-label">Data de Validade</label>
 						<div class="input-group mb-2">
@@ -67,6 +67,15 @@
 							<input type="date" class="form-control" id="inlineFormInputGroup"
 									value="{{dthoje}}"	placeholder="Valicdade">
 						</div>
+					</div>
+					 <div class="form-group col-md-4">
+						  <label for="inputState">State</label>
+							  <select id="inputState" class="form-control">
+								<option value="pendente" selected>pendente</option>
+								<option value="aprovado">aprovado</option>
+								<option value="rejeitado">rejeitado</option>
+								<option value="expirado">expirado</option>
+							  </select>
 					</div>
 				</div>
 				<div class="form-row align-items-center col-12">
@@ -85,8 +94,8 @@
 					<table class="table">
 						<thead class="thead-dark">
 							<tr>
-								<th scope="col">#</th>
-								<th scope="col">First</th>
+								<th scope="col">Num</th>
+								<th scope="col"></th>
 								<th scope="col">Last</th>
 								<th scope="col">Handle</th>
 							</tr>

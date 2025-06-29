@@ -21,9 +21,9 @@
 	<div class="alert alert-success text-center" role="alert">{{ success }}</div>
 	{% endif %}
 	<!-- DataTales Example -->
-	<div class="card shadow mb-4">
+	<div class="card shadow mb-2">
 		<div class="card-header py-3">
-			<h6 class="m-0 font-weight-bold text-primary"></h6>
+			<h6 class="font-weight-bold text-primary"></h6>
 			<button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#staticBackdrop">
 				<i class="fa-solid fa-pen-to-square"></i>
 				Cadastrar</button>
@@ -31,7 +31,8 @@
 				<div class="input-group col-md-2">
 					<input type="text" class="form-control" placeholder="Pesquisa usuarios"
 						aria-label="Recipient's username" aria-describedby="button-addon2">
-					<button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04"><i class="fa-solid fa-magnifying-glass"></i></button>
+					<button class="btn btn-outline-secondary" type="button" id="inputGroupFileAddon04"><i
+							class="fa-solid fa-magnifying-glass"></i></button>
 				</div>
 			</div>
 		</div>
@@ -49,6 +50,11 @@
 						</div>
 						<div class="modal-body">
 							<div class="form-row">
+								<div class="d-flex justify-content-center">
+									<div class="alert alert-danger text-center" id="mensagem" role="alert"
+										style="display: none;">Senha diferente da digitada ou quantiade menor que 8
+										caracteres</div>
+								</div>
 								<div class="form-group col-md-6">
 									<label for="nome">Nome</label>
 									<input type="text" name="nome" class="form-control" id="name"
@@ -63,13 +69,11 @@
 							<div class="form-row">
 								<div class="form-group col-md-6">
 									<label for="senha">Senha</label>
-									<input type="password" name="senha" class="form-control" id="senha"
-										placeholder="*****" required>
+									<input type="password" name="senha" class="form-control" id="senha" required>
 								</div>
 								<div class="form-group col-md-6">
 									<label for="confirma">Confirma senha</label>
-									<input type="password" class="form-control" id="confirma" placeholder="*****"
-										required>
+									<input type="password" class="form-control" id="confirma" required>
 								</div>
 							</div>
 							<div class="form-group">
@@ -82,24 +86,6 @@
 									<label for="grupo">Grupo</label>
 									<input type="text" name="grupo" class="form-control" id="groupo" placeholder="">
 								</div>
-								<div class="form-group col-md-4">
-									<label for="state">Pode dar desconto</label>
-									<select id="state" class="form-control">
-										<option selected>Seleciona a opção</option>
-										<option value="0.0">%0</option>
-										<option value="5.0">%5</option>
-										<option value="10.0">%10</option>
-										<option value="15.0">%15</option>
-										<option value="50.0">%100</option>
-									</select>
-								</div>
-								<div class="form-group col-md-5">
-									<label for="inputTelefone">Telefone</label>
-									<input type="number" name="telefone" class="form-control" id="inputTelefone"
-										placeholder="(11)999999999" required>
-								</div>
-							</div>
-							<div class="form-row">
 								<div class="form-group col-md-3">
 									<label for="inputState">Usuario Bloqueado</label>
 									<select id="inputState" name="status" class="form-control">
@@ -206,12 +192,12 @@
 												<div class="form-group col-md-6">
 													<label for="senha">Senha</label>
 													<input type="password" name="senha" class="form-control" id="senha"
-														placeholder="*****" required>
+														value="{{ usuario.SENHA }}" placeholder="*****" required>
 												</div>
 												<div class="form-group col-md-6">
 													<label for="confirma">Confirma senha</label>
 													<input type="password" class="form-control" id="confirma"
-														placeholder="*****" required>
+														value="{{ usuario.SENHA }}" placeholder="*****" required>
 												</div>
 											</div>
 											<div class="form-group">
@@ -226,30 +212,9 @@
 													<input type="text" name="grupo" class="form-control" id="groupo"
 														value="{{ usuario.GRUPO }}" placeholder="">
 												</div>
-												<div class="form-group col-md-4">
-													<label for="state">Pode dar desconto</label>
-													<select id="state" class="form-control">
-														<option value="{{ usuario.DESCONTO }}" selected>Seleciona a
-															opção</option>
-														<option value="0.0">%0</option>
-														<option value="5.0">%5</option>
-														<option value="10.0">%10</option>
-														<option value="15.0">%15</option>
-														<option value="50.0">%100</option>
-													</select>
-												</div>
-												<div class="form-group col-md-5">
-													<label for="inputTelefone">Telefone</label>
-													<input type="number" name="telefone" class="form-control"
-														id="inputTelefone" value="{{usuario.TELEFONE}}" placeholder=""
-														required>
-												</div>
-											</div>
-											<div class="form-row">
 												<div class="form-group col-md-3">
 													<label for="inputState">Usuario Bloqueado</label>
-													<select id="bloqueado" name="bloqueado" class="form-control"
-														required>
+													<select name="bloqueado" class="form-control" required>
 														<option selected value="{{usuario.BLOQUEADO}}"></option>
 														<option value="0" {% if usuario.BLOQUEADO==0 %} selected {%
 															endif %}>Não</option>
@@ -290,5 +255,30 @@
 
 </div>
 <!-- /.container-fluid -->
+<script>
+	document.addEventListener('DOMContentLoaded', function () {
+		const senhaInput = document.getElementById('senha');
+		const confirmaInput = document.getElementById('confirma');
+		const mensagemError = document.getElementById('mensagem');
+
+		function validarSenhas() {
+			const senha = senhaInput.value;
+			const confirma = confirmaInput.value;
+
+			if (confirma.length > 0 && senha !== confirma) {
+				mensagemError.style.display = 'block';
+				senhaInput.classList.add('is-invalid');
+			}
+			else {
+				mensagemError.style.display = 'none';
+				senhaInput.classList.remove('is-invalid');
+			}
+		}
+
+		confirmaInput.addEventListener('input', validarSenhas);
+		senhaInput.addEventListener('input', validarSenhas);
+	});
+
+</script>
 <script src="assets/js/function/validaCampos.js"></script>
 {% endblock %}

@@ -10,14 +10,120 @@
 <div class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Produtos</h1>
+    <h1 class="h3 mb-2 text-gray-800">Clientes</h1>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary"></h6><button class="btn btn-outline-primary"><i
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#cadastroCliente"><i
                     class="fa-solid fa-pen-to-square"></i> Cadastrar</button>
         </div>
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="cadastroCliente" data-backdrop="static" data-keyboard="false" tabindex="-1"
+            aria-labelledby="cadastroClienteLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="cadastroClienteLabel">Cadastro de Clientes</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="alert alert-danger mt-5 text-center" role="alert" style="display: none;" id="error">
+                            CNPJ ou CPF invalidos
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-2">
+                                <label for="inputTipo">Tipo</label>
+                                <select id="inputTupo" class="form-control">
+                                    <option value="fisico" selected>Fisica</option>
+                                    <option value="juridico">Juridica </option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="inputCgc">CNPJ/CPF</label>
+                                <input type="text" class="form-control" name="cgc" id="cgc"
+                                    placeholder="Digite o CNPJ ou CPF">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputPassword4">Nome</label>
+                                <input type="text" class="form-control" name="nome" id="nome">
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" role="alert" id="errorCep">
+                            CEP inválido
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputEi">RG / IEST</label>
+                                <input type="text" class="form-control" name="ei" id="ei" placeholder="123234">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label for="inputEmail">E-mail</label>
+                                <input type="email" class="form-control" name="email" id="email" placeholder="E-mail">
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label for="inputCep">CEP</label>
+                                <input type="text" class="form-control" name="cep" id="inputCep"
+                                    placeholder="00000-000">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputMunicipio">Municipio</label>
+                                <input type="text" class="form-control" name="municipio" id="inputMunicipio">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputEstado">Estado</label>
+                                <input type="text" class="form-control" name="estado" id="inputEstado">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputLogradouro">Logradouro</label>
+                                <input type="text" class="form-control" name="logradouro" id="inputLogradouro">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="inputCidade">Cidade</label>
+                                <input type="text" class="form-control" name="cidade" id="inputCidade">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputNumero">Numero</label>
+                                <input type="text" class="form-control" name="numero" id="inputNumero">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputComplemento">Complemento</label>
+                                <input type="text" class="form-control" name="complemento" id="inputComplemento">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputBairro">Bairro</label>
+                                <input type="text" class="form-control" name="bairro" id="inputBairro">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="inputTelefone">Telefone</label>
+                                <input type="text" class="form-control" name="telefone" id="inputTelefone">
+                            </div>
+                            <div class="form-group col-md-2">
+                                <label for="inputStatus">Status</label>
+                                <select id="inputStatus" class="form-control">
+                                    <option value="0" selected>Ativo</option>
+                                    <option value="1">Inativo</option>
+                                </select>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card-body">
             <div class="table-responsive">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -71,4 +177,10 @@
 
 </div>
 <!-- /.container-fluid -->
+
+<!-- scripts -->
+<script src="/assets/js/validaCep.js"></script>
+<script src="/assets/js/validaCgc.js"></script>
+
+
 {% endblock %}

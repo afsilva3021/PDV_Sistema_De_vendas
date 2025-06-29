@@ -24,7 +24,8 @@ class AuthController
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-      $password = trim($_POST['password']);
+      $password = filter_input(INPUT_POST, 'password', FILTER_UNSAFE_RAW);
+
 
       // Validação do email
       if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {

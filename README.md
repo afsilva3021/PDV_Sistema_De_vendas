@@ -5,10 +5,13 @@ Um sistema de **Ponto de Venda (PDV)** desenvolvido em **PHP 8.4**, com arquitet
 ## 📦 Funcionalidades
 
 - Cadastro, edição e exclusão de colaboradores
-- Gerenciamento de vendas e produtos (em desenvolvimento)
-- Estrutura organizada em MVC (Model-View-Controller)
-- Conexão com banco de dados MariaDB
-- Sistema leve e adaptável
+- Gerenciamento de vendas (em desenvolvimento)
+- Cadastro de clientes
+- Cadastro de Fornecedores
+- Cadastro de Produtos
+- Cadastro de Empresas
+- Controle de estoque (em desenvolvimento)
+- Cadastro de custo (em desenvolvimento)
 
 ## 🚀 Tecnologias Utilizadas
 
@@ -18,6 +21,9 @@ Um sistema de **Ponto de Venda (PDV)** desenvolvido em **PHP 8.4**, com arquitet
 - Twig (template engine)
 - HTML5/CSS3
 - JavaScript (básico, para interações)
+- Estrutura organizada em MVC (Model-View-Controller)
+- Conexão com banco de dados MariaDB
+- Sistema leve e adaptável
 
 ## 📁 Estrutura do Projeto
 
